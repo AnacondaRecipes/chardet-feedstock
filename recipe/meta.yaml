@@ -41,7 +41,7 @@ about:
   summary: Universal character encoding detector
   description: |
     chardet is a character encoding auto-detector in Python.
-  doc_url: http://chardet.readthedocs.org/
+  doc_url: https://chardet.readthedocs.io/en/latest/ 
   doc_source_url: https://github.com/chardet/chardet/blob/master/docs/index.rst
   dev_url: https://github.com/chardet/chardet
 
