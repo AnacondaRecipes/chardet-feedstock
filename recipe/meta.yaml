@@ -10,7 +10,7 @@ source:
 
 build:
   number: 0 
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  script: "{{ PYTHON }} -m pip install e --no-deps --ignore-installed --no-cache-dir -vvv"
   entry_points:
     - chardetect = chardet.cli.chardetect:main
 
@@ -35,9 +35,10 @@ test:
 
 about:
   home: https://github.com/chardet/chardet
-  license: LGPL2
+  license: LGPL-2.1-only 
   license_family: GPL
   license_file: LICENSE
+  license_url: https://github.com/chardet/chardet/blob/main/LICENSE
   summary: Universal character encoding detector
   description: |
     chardet is a character encoding auto-detector in Python.
