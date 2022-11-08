@@ -10,7 +10,7 @@ source:
 
 build:
   number: 0 
-  script: "{{ PYTHON }} -m pip install e --no-deps --ignore-installed --no-cache-dir -vvv"
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   entry_points:
     - chardetect = chardet.cli.chardetect:main
 
