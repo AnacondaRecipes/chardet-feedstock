@@ -1,4 +1,4 @@
-{% set version = "4.0.0" %}
+{% set version = "5.0.0" %}
 
 package:
   name: chardet
@@ -6,10 +6,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/c/chardet/chardet-{{ version }}.tar.gz
-  sha256: 0d6f53a15db4120f2b08c94f11e7d93d2c911ee118b6b30a04ec3ee8310179fa
+  sha256: 0368df2bfd78b5fc20572bb4e9bb7fb53e2c094f60ae9993339e8671d0afb8aa 
 
 build:
-  number: 1003
+  number: 0 
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   entry_points:
     - chardetect = chardet.cli.chardetect:main
@@ -17,6 +17,8 @@ build:
 requirements:
   host:
     - python
+    - setuptools
+    - wheel
     - pip
     - pytest-runner
   run:
@@ -25,19 +27,21 @@ requirements:
 test:
   imports:
     - chardet
+  requires:
+    - pip
   commands:
+    - pip check
     - chardetect --help
 
 about:
   home: https://github.com/chardet/chardet
-  license: LGPL2
+  license: LGPL-2.1-only 
   license_family: GPL
   license_file: LICENSE
   summary: Universal character encoding detector
   description: |
     chardet is a character encoding auto-detector in Python.
-  doc_url: http://chardet.readthedocs.org/
-  doc_source_url: https://github.com/chardet/chardet/blob/master/docs/index.rst
+  doc_url: https://chardet.readthedocs.io/en/latest/ 
   dev_url: https://github.com/chardet/chardet
 
 
