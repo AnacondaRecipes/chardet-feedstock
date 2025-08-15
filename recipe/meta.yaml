@@ -46,13 +46,13 @@ test:
   requires:
     - pip
     - pytest
-    - pytest-xdist
+    # - pytest-xdist
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - chardetect --help
-    - pytest -n auto test.py -vv --color=yes  # [not win]
-    - pytest -n auto test.py -vv --color=yes -k "not ({{ skip_broken_tests | join(' or ') }})"  # [win]
+    - pytest test.py -vv --color=yes  # [not win]
+    - pytest test.py -vv --color=yes -k "not ({{ skip_broken_tests | join(' or ') }})"  # [win]
 
 about:
   home: https://github.com/chardet/chardet
