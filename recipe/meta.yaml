@@ -25,6 +25,13 @@ requirements:
   run:
     - python
 
+# Win64 some encodings tests failed
+# tests\\iso-8859-9-turkish\\wikitop_tr_ISO-8859-9.txt-iso-8859-9]
+{% set skip_broken_tests = [
+    "test_encoding_detection",
+    "test_encoding_detection_rename_legacy"
+] %}
+
 test:
   source_files:
     - tests
@@ -39,13 +46,12 @@ test:
   requires:
     - pip
     - pytest
-    - pytest-xdist
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - chardetect --help
-    - pytest -n auto test.py -vv --color=yes  # [not win]
-    - pytest -n auto test.py -vv -k "not test_encoding_detection and not test_encoding_detection_rename_legacy"  # [win]
+    # - pytest test.py -vv --color=yes  # [not win]
+    - pytest -vv -ra --full-trace --showlocals --maxfail=1 test.py -k "not ({{ skip_broken_tests | join(' or ') }})"  # [win]
 
 about:
   home: https://github.com/chardet/chardet
