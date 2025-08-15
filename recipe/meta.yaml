@@ -26,27 +26,38 @@ requirements:
     - python
 
 test:
+  source_files:
+    - tests
+    - test.py
   imports:
     - chardet
     - chardet.metadata
     - chardet.sbcharsetprober
+    - chardet.cli.chardetect
+    - chardet.universaldetector
+    - chardet.version
   requires:
     - pip
+    - pytest
+    - pytest-xdist
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - chardetect --help
+    - pytest -n auto test.py -vv --color=yes
 
 about:
   home: https://github.com/chardet/chardet
-  license: NGPL
-  license_family: GPL
+  license: LGPL-2.1-or-later
+  license_family: LGPL
   license_file: LICENSE
   summary: Universal character encoding detector
   description: |
-    chardet is a character encoding auto-detector in Python.
+    Chardet is a character encoding detector for Python. It supports a wide range of encodings,
+    including ASCII, UTF variants, various East Asian encodings (EUC, ISO-2022, Shift_JIS),
+    and many others. Chardet uses statistical models and heuristics to guess the most likely encoding.
   doc_url: https://chardet.readthedocs.org
   dev_url: https://github.com/chardet/chardet
-
 
 extra:
   recipe-maintainers:
