@@ -46,6 +46,7 @@ test:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - chardetect --help
+    - copy recipe_conftest.py conftest.py  # [win]
     - pytest -n auto -vv --color=yes test.py
 
 about:
