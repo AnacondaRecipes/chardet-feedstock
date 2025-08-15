@@ -52,7 +52,7 @@ test:
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - chardetect --help
     - pytest -n auto test.py -vv --color=yes  # [not win]
-    - pytest -n auto test.py -vv -k "{{ ignore_tests }}"  # [win]
+    - pytest -p no:xdist test.py -vv -k "{{ ignore_tests }}"  # [win]
 
 about:
   home: https://github.com/chardet/chardet
