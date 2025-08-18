@@ -1,16 +1,18 @@
-{% set version = "4.0.0" %}
+{% set name = "chardet" %}
+{% set version = "5.2.0" %}
 
 package:
-  name: chardet
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/c/chardet/chardet-{{ version }}.tar.gz
-  sha256: 0d6f53a15db4120f2b08c94f11e7d93d2c911ee118b6b30a04ec3ee8310179fa
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 1b3b6ff479a8c414bc3fa2c0852995695c4a026dcd6d0633b2dd092ca39c1cf7
 
 build:
-  number: 1003
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+  number: 0
+  skip: True  # [py<37]
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
   entry_points:
     - chardetect = chardet.cli.chardetect:main
 
@@ -18,28 +20,47 @@ requirements:
   host:
     - python
     - pip
-    - pytest-runner
+    - setuptools
+    - wheel
   run:
     - python
 
 test:
+  source_files:
+    - tests
+    - test.py
+  files:
+    - recipe_conftest.py
   imports:
     - chardet
+    - chardet.metadata
+    - chardet.sbcharsetprober
+    - chardet.cli.chardetect
+    - chardet.universaldetector
+    - chardet.version
+  requires:
+    - pip
+    - pytest
+    - pytest-xdist
   commands:
+    - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
     - chardetect --help
+    - copy recipe_conftest.py conftest.py  # [win]
+    - pytest -n auto -vv --color=yes test.py
 
 about:
   home: https://github.com/chardet/chardet
-  license: LGPL2
-  license_family: GPL
+  license: LGPL-2.1-or-later
+  license_family: LGPL
   license_file: LICENSE
   summary: Universal character encoding detector
   description: |
-    chardet is a character encoding auto-detector in Python.
-  doc_url: http://chardet.readthedocs.org/
-  doc_source_url: https://github.com/chardet/chardet/blob/master/docs/index.rst
+    Chardet is a character encoding detector for Python. It supports a wide range of encodings,
+    including ASCII, UTF variants, various East Asian encodings (EUC, ISO-2022, Shift_JIS),
+    and many others. Chardet uses statistical models and heuristics to guess the most likely encoding.
+  doc_url: https://chardet.readthedocs.io
   dev_url: https://github.com/chardet/chardet
-
 
 extra:
   recipe-maintainers:
