@@ -2,7 +2,7 @@
 {% set version = "5.2.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -10,8 +10,8 @@ source:
   sha256: 1b3b6ff479a8c414bc3fa2c0852995695c4a026dcd6d0633b2dd092ca39c1cf7
 
 build:
-  number: 0
-  skip: True  # [py<37]
+  number: 1
+  skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
   entry_points:
     - chardetect = chardet.cli.chardetect:main
@@ -42,6 +42,7 @@ test:
     - pip
     - pytest
     - pytest-xdist
+    - py
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
